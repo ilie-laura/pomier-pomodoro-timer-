@@ -22,7 +22,7 @@ function createWindow(){
      protocol:'file',
      slashes:true
     });
-    mainWindow.setWindowButtonVisibility(false);
+ 
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadURL(starturl);//load in electron window
     //close app event
