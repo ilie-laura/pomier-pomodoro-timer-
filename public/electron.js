@@ -5,11 +5,12 @@ const path=require('path');
 
 function createWindow(){
     const mainWindow=new BrowserWindow({
-        title:"Pomodoro Timer",
+        title:"Pomier",
         width:400,
         height:400,
         frame:false,
-        titleBarStyle: 'hidden',
+        icon:path.join(__dirname,'icon.ico'),
+       
         webPreferences: {
             preload: path.join(__dirname, "preload.js"), // Path to preload script
             contextIsolation: true,   // Keeps context isolated for security
