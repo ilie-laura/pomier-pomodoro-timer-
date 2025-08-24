@@ -4,22 +4,30 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div style={{ position: 'relative' }}>
+        <div>
+            <button className='closeButton'>
+                     Close
+            </button>
+          </div>
+
+           <div className='home-content'>
+               <div className='home-controls'>
+                 <button className='imgButton'>
+                        Work
+                   </button>
+                  <button className='imgButton'>
+                       Break
+                   </button>
+
+                </div>
+          <p>You can do it!</p>
+          <h1 className='homeTimer'>25:00</h1>
+                  <button className='startButton'>
+                      Start
+                   </button>
+            </div>
+     </div>
   );
 }
 
