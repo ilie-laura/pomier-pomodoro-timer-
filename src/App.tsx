@@ -13,7 +13,8 @@ import closeButton from './assets/close.svg';
 import IdleGif from './assets/idle.gif';
 import WorkGif from './assets/work.gif';
 import BreakGif from './assets/break.gif';
-import music from './assets/sakura.mp3';
+import music from './assets/feels.mp3';
+import musicBg from './assets/sakura.mp3'
 import cd from './assets/cd.png'
 import cd_exit from './assets/cd_x.png'
 
@@ -21,7 +22,7 @@ import cd_exit from './assets/cd_x.png'
 
 function App() {
 
-const Music=new Audio(music);
+const finishMusic=new Audio(music);
 const [timeLeft,setTimeLeft] = useState(25*60);
 const [isRunning,setIsRunning] = useState(false);
 const [isBreak,setIsBreak] = useState(false); 
@@ -30,6 +31,7 @@ const [breakButton,setBreakButton] = useState(breakImg);
 const [workButton,setWorkButton] = useState(workImg);
 const [gifImage,setGifImage] = useState(IdleGif);
 const [image,setImage]=useState(playImg);
+
 const audioRef = useRef<HTMLAudioElement>(null);
   const playMusic = () => {
     audioRef.current?.play();
@@ -102,6 +104,19 @@ useEffect(() => {
 
 //audio
 
+
+ useEffect(() => {
+    if (timeLeft === 0 && isRunning) {
+        finishMusic.play().catch(err => {
+            console.error("Audio play failed:", err);
+        });
+        setIsRunning(false); // Optional: auto-stop the timer
+        setImage(playImg);   // Reset to play button
+        setGifImage(IdleGif); // Reset to idle gif
+        setTimeLeft(isBreak ? 5 * 60 : 25 * 60);
+    }
+}, [timeLeft]);
+
 const HandleClick = () => {
   if (!isRunning) {
     setIsRunning(true);
@@ -114,16 +129,25 @@ const HandleClick = () => {
     setImage(playImg);
   }
 };
+  const handleCloseClick = () => {
+  if (window.electronAPI?.closeApp) {
+    window.electronAPI.closeApp();
+  } else {
+    console.warn("Electron API not available");
+  }
+}
 const containerClass = `home-container ${isRunning ? 'bg-border' : ''}`;
   return (
     <div className={containerClass} style={{ position: 'relative' }}>
         <audio ref={audioRef} loop>
-        <source src={music} type="audio/mpeg" />
+        <source src={musicBg} type="audio/mpeg" />
       </audio>
       <div>
-        <button className='closeButton'>
+
+        <button className='closeButton' onClick={handleCloseClick}>
           <img src={closeButton} alt="Close" />
         </button>
+
       </div>
       <div className='music-controls'>
         <button className='playMusic' onClick={playMusic}>
